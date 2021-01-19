@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -32,12 +33,11 @@ class LoginController extends Controller
     if (method_exists($this, 'redirectTo')) {
         return $this->redirectTo();
     }
-
     return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
     }
 
 
-    /**
+    /*
      * Create a new controller instance.
      *
      * @return void

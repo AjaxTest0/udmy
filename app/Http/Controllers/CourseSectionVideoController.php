@@ -36,42 +36,27 @@ class CourseSectionVideoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request, $id)
+    {  
         $request->validate([
             'lecture_video' => 'required'
         ]);
-        
-        // dd($request->all(), $request->file('video_file')->getClientOriginalName(),$request->video_file);
-        // echo "fjkbkjb";
-        //echo "before";
-
         if($request->hasfile('lecture_video')){
             $file       = $request->file('lecture_video');    
             $filename   = time().'.'.$file->getClientOriginalExtension();
-            $path       = public_path().'/uploads/'.auth()->id().'/lectures/';
+            $path       = 'uploads/'.auth()->id().'/lectures/';
             $file->move($path, $filename);
-            echo $path;
+            $video = new CourseSectionVideo();
+            $video->name = $request["lecture_name"];    
+            $video->video_path = $path;
+            $video->lecture_name = $filename;
+            $video->section_id = $id;
+            $video->paid = ($request["lecture_free"] == null? 0:1 );
+            $video->description = $request["lecture_description"];    
+            $video->save();
+            return redirect()->route('myCourses.index');
         }
     }
-
-
-
-
-    //     $file = $request['file'];
-    //     
-    //     $extenion = \File::extension($file);
-    //     if ($extenion == "x-flv" || $extenion == "mp4" || $extenion == "x-mpegURL" || $extenion == "MP2T" || $extenion == "3gpp" || $extenion == "quicktime" || $extenion == "x-msvideo" || $extenion == "x-ms-wmv") 
-    //     {    
-    //         $file = request::file('file');
-    //         $filename = $file->getClientOriginalName();
-    //         $path = public_path().'/uploads/';   
-    //         $file->move($path, $file);
-        
-    //     }
-    //     else
-    //         echo "not";
-    // }
 
     /**
      * Display the specified resource.
@@ -115,6 +100,8 @@ class CourseSectionVideoController extends Controller
      */
     public function destroy(CourseSectionVideo $CourseSectionVideo)
     {
-        
+        $CourseSectionVideo->delete();
+
+        return redirect()->route('myCourses.index');
     }
 }

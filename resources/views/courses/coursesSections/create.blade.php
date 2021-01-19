@@ -6,7 +6,7 @@
   <div class="card">
     <div class="card-header clearfix">
       <h4 class="card-title font-weight-bold text-muted float-left">Create a new Course</h4>      
-      <a href="{{ route('mySections.index') }}" class="btn btn-primary btn-sm float-right">Go Back</a>
+      <a href="{{ route('myCourses.index') }}" class="btn btn-primary btn-sm float-right">Go Back</a>
     </div>
   </div>    
   <div class="card-body">

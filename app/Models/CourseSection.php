@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class CourseSection extends Model
 {
     use HasFactory;
-    protected $guarded = [];
 
+    protected $guarded = [];
 
     public function videos()
     {
-    	return $this->hasMany(CourseSectionVideo::class);
+    	return $this->hasMany(CourseSectionVideo::class, 'section_id', 'id');
     }
 }

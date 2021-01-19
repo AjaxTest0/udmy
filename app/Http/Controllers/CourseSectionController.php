@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\CourseSection;
+use App\Models\CourseSectionVideo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DB;
 
@@ -16,12 +17,6 @@ class CourseSectionController extends Controller
      */
     public function index()
     {
-        //
-        // dd(request()->all());
-        // $sections = \DB::table('course_sections')->latest()->get();
-        // //return view('courses\courses_section\create');
-        
-        // return view('courses\coursesSections\index', compact('sections'));
 
     }
     /**
@@ -44,11 +39,15 @@ class CourseSectionController extends Controller
      */
     public function store(Request $request)
     {
+        // Saving Topic/section
         $section = new CourseSection();
-            $section->name = $request['section'];
-            $section->course_id = $request['course'];   
-            $section->save();  
-        return view('home');
+            $section->name = $request['topic_name'];
+            $section->course_id =  $request['course_id'];
+            $section->save();
+        // Saving Videos and topic    
+        dd($section->id);
+           
+        
     }
 
     /**
@@ -59,7 +58,7 @@ class CourseSectionController extends Controller
      */
     public function show(CourseSection $CourseSection)
     {
-        //echo $CourseSection;
+        
         return view('courses.coursesSections.coursesSectionsVideos.index',compact('CourseSection'));
     }
 
@@ -94,7 +93,7 @@ class CourseSectionController extends Controller
      */
     public function destroy(CourseSection $CourseSection)
     {
-        //
-        //dd($CourseSection);
+        $CourseSection->delete();    
+        return redirect()->route('myCourses.index');
     }
 }

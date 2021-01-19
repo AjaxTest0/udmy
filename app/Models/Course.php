@@ -8,12 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+    
     protected $guarded = [];
 
 
     public function sections()
     {
-    	return $this->hasMany(CourseSection::class);
+    	return $this->hasMany(CourseSection::class,'course_id','id');
+    }
+    public function UserCourse()
+    {
+    	return $this->morphToMany(UserCourse::class);
     }
 
 }

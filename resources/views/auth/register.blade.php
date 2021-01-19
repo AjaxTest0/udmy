@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -45,6 +46,7 @@
                                 <select id="type"  name="type"  required  class="form-control" autocomplete="type">
                                     <option value="1">Teacher</option>
                                     <option value="2">Student</option>
+                                    <option value="3">ADMIN</option>
                                  </select>
 
                                 @error('type')

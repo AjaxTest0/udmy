@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-3">
 	<!-- Brand -->
 	<a class="navbar-brand" href="/">Course Hero</a>
 
@@ -23,15 +23,21 @@
 			<li class="nav-item float-right">
 				<a class="nav-link" href="{{ route('myCourses.index') }}">My Courses</a>
 			</li>
-			<li class="nav-item float-right">
-				<a class="nav-link" href="{{ route('mySections.index') }}">My Sections</a>
-			</li>
-			<li class="nav-item float-right">
-				<a class="nav-link" href="{{ route('myVideos.index') }}">My Videos</a>
-			</li>
+			
 		@endif
 		@if(auth()->user()->Type == 2)
 			
+		@endif
+		@if(auth()->user()->Type == 3)
+			<li class="nav-item float-right">
+				<a class="nav-link" href="{{  route('myUsers.index') }}">Dashboard</a>
+			</li>
+			<li>
+				<a class="nav-link" href="{{  route('myUsers.users') }}">User</a>
+			</li>
+			<li class="nav-item float-right">
+				<a class="nav-link" href="{{ route('myCourses.view') }}">Courses</a>
+			</li>
 		@endif
 		<li class="nav-item dropdown">
 			<a id="navbarDropdown" class="nav-link dropdown-toggle text-capitalize" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -48,7 +54,7 @@
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
 				@csrf
 			</form>
-		</div>
+			</div>
 	</li>
 	@endguest
 </ul>

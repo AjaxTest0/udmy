@@ -11,32 +11,35 @@
 			<a href="{{ route('myCourses.create') }}" class="btn btn-primary btn-sm float-right">Create a new Course</a>
 		</div>
 		<div class="card-body">
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
+			<div class="table-responsive">
+				<table class="table table-striped table-hover">
+					<thead class="thead-dark">
 						<th>Name</th>
-						<th>description</th>
+						<th>Description</th>
+						<th>Status</th>
 						<th>Price</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($courses as $course)
-					<tr>
-						<td>{{ $course->name }}</td>
-						<td>{{ $course->description }}</td>
-						<td>{{ $course->price }}$</td>
-						<td>
-							<div class="btn-group btn-group-sm">
-								<a class="btn btn-primary btn-sm fas fa-edit">Edit</a>
-								<a href="{{ route('myCourses.destroy') }}" class="btn btn-primary btn-sm fas fa-trash p-1">Delete</a>
-								<a href="{{ route('myCourses.show',$course->id) }}" class="btn btn-primary btn-sm fas fa-eye ">View</a>
-							</div>
-						</td>
-					</tr>
-					@endforeach
-				</tbody>
-			</table>
+						<th style="width: 20%">Actions</th>
+					</thead>
+					<tbody>
+						@foreach($courses as $course)
+						<tr>
+							<td>{{ $course->name }}</td>
+							<td>{{ $course->description }}</td>
+							<td><span class="btn btn-{{ $course->status ? 'success' : 'danger' }} btn-sm">{{ $course->status ? 'Active' : 'In Active' }}</span></td>
+							<td>{{ $course->price }}$</td>
+							<td>
+								<div class="btn-group btn-group-sm">
+									<a href="{{ route('myCourses.updateStatus',[$course->id, !$course->status ? '1' : '0']) }}" class="btn btn-primary"><i class="fas fa-eye fa-fw"></i> {{ !$course->status ? 'Enable' : 'Disable' }}</a>
+									<a href="{{ route('myCourses.show',$course->id) }}" class="btn btn-primary"><i class="fas fa-eye fa-fw"></i> View</a>
+									<a href="{{ route('myCourses.edit', $course->id) }}" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i> Edit</a>
+									<a href="{{ route('myCourses.destroy',$course->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-trash fa-fw"></i> Delete</a>
+								</div>
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
+use App\Models\UserCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
+        
         $courses = Course::where('teacher_id', auth()->id())->latest()->get();
         return view('courses/index', compact('courses'));
 
@@ -39,12 +42,23 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+         $course = new Course();
+            $course->name = $request['name'];   
+            $course->teacher_id = auth()->id();   
+            $course->description = $request['description'];
+            $course->price = $request['price'];
+            $course->save();  
+        // $usercourse = new UserCourse();
+        //     $usercourse->uswe_id = $request['name'];   
+        //     $usercourse->price = $request['price'];
+        //     $usercourse->save(); 
         
-       
-        $course = Course::create($request->all());
-        $course->teacher_id = Auth()->id();
-        $course->save(); 
-        return view('home');
+
+
+        // $course = Course::create($request->all());
+        // $course->teacher_id = Auth()->id();
+        // $course->save(); 
+        return redirect()->route('home');
         
     }
 
@@ -69,7 +83,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('courses.edit',compact('course'));
     }
 
     /**
@@ -92,9 +106,22 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //DB::table('courses')->delete();
-        echo request()->all;
-       
-        //return redirect()->route('myCourses.index');
+        $course->delete();       
+        return redirect()->route('myCourses.index');
+    }
+
+    public function updateStatus(Course $course, $status)
+    {
+        $course->update(['status' => $status]);
+        return redirect()->route('myCourses.index');
+        
+    }
+    public function view()
+    {
+        $courses = Course::latest()->get();
+        $users = User::where('Type','1' )->latest()->get();
+        return view('admin/viewCourses',compact('courses','users'));
+
+        
     }
 }

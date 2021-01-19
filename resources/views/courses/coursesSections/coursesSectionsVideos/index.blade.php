@@ -16,11 +16,11 @@
 			<h4 class="card-title font-weight-bold">Upload Leacture</h4>
 		</div>
 		<div class="card-body">
-			<form method="post" action="{{ route('myVideos.store') }}" enctype="multipart/form-data">
+			<form method="post" action="{{ route('myVideos.store',$CourseSection->id) }}" enctype="multipart/form-data">
 				@csrf
 				<div class="form-group">
 					<label>Lecture Title:<span class="text-danger">*</span></label>
-					<input type="text" class="form-control" placeholder="Enter Lecture Title" name="lecture_name">
+					<input type="text" class="form-control" placeholder="Enter Lecture Title" name="lecture_name" required>
 				</div>
 
 				<div class="form-group">
@@ -40,12 +40,12 @@
 
 				<div class="form-group">
 					<div class="form-group custom-control custom-switch">
-					   <input type="checkbox" class="custom-control-input" id="switch1" name="lecture_free">
+					   <input type="checkbox" class="custom-control-input" id="switch1" name="lecture_free" value="1">
 					   <label class="custom-control-label" for="switch1">Free Lecture</label>
 					</div>
 				</div>
 				<div>
-					<button type="submit" class="btn btn-primary">Save & Upload Lecture</button>
+					<button type="submit" class="btn btn-primary"  >Save & Upload Lecture</button>
 				</div>
 			</form>
 		</div>

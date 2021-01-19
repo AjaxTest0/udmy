@@ -19,7 +19,7 @@ class StudentController extends Controller
     public function index()
     {
         $courses = \DB::table('courses')->latest()->get();
-        return view('student/index', compact('courses'));
+        return view('student.index', compact('courses'));
         
 
     }
@@ -51,9 +51,10 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show(course $course)
     {
-        //
+       
+       return view('student/view', compact('course'));
     }
 
     /**
